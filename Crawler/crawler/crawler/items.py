@@ -19,4 +19,4 @@ class CrawlerItem(scrapy.Item):
     numberOfCopies = scrapy.Field()
     level = scrapy.Field()
     genres = scrapy.Field()
-    _creaeted = scrapy.Field()
+    _created = scrapy.Field()
