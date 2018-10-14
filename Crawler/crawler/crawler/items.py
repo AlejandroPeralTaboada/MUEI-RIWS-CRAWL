@@ -10,11 +10,13 @@ import scrapy
 
 class CrawlerItem(scrapy.Item):
     # define the fields for your item here like:
+    idGift = scrapy.Field()
+    idGame = scrapy.Field()
     name = scrapy.Field()
-    cost = scrapy.Field()
-    created = scrapy.Field()
-    crawled = scrapy.Field()
-    steamId = scrapy.Field()
-    entries = scrapy.Field()
-    imageLink = scrapy.Field()
-    pass
+    requiredPoints = scrapy.Field()
+    entryNumber = scrapy.Field()
+    remainingTime = scrapy.Field()
+    numberOfCopies = scrapy.Field()
+    level = scrapy.Field()
+    genres = scrapy.Field()
+    _creaeted = scrapy.Field()
