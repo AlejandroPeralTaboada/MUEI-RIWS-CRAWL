@@ -39,10 +39,12 @@ class SteamgiftsSpider(CrawlSpider):
         baseSteamUrl = "https://store.steampowered.com/app/"
         item['idGame'] = customInt(response.xpath(
             "//div[@class='featured__heading']/a[1]/@href").extract_first().replace(baseSteamUrl, "").split("/")[0])
-       # remainingTime = scrapy.Field()
+        item['remainingTime'] = customInt(response.xpath(
+            "//div[@class='featured__column']/span/@data-timestamp").extract_first())
         # genres = scrapy.Field()
+        # https://store.steampowered.com/api/appdetails?appids=646470
         self.count += 1
-        if (self.count > 1):
+        if (self.count > 20):
             raise CloseSpider('item_exceeded')
         yield item
 
