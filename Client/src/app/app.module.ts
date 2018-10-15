@@ -1,23 +1,35 @@
-import { BrowserModule } from "@angular/platform-browser";
-import { NgModule } from "@angular/core";
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import { AppComponent } from "./app.component";
-import { StoreModule } from "@ngrx/store";
-import { reducers, metaReducers } from "./store/reducers";
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
-import { environment } from "../environments/environment";
-import { EffectsModule } from "@ngrx/effects";
-import { AppEffects } from "./store/effects/app.effects";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { AppComponent } from './app.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './store/reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './store/effects/app.effects';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeComponent } from './views/home/home.component';
+import { DetailsComponent } from './views/details/details.component';
+import { SidebarComponent } from './views/sidebar/sidebar.component';
+import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    DetailsComponent,
+    SidebarComponent,
+    PageNotFoundComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AppEffects])
+    EffectsModule.forRoot([AppEffects]),
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
