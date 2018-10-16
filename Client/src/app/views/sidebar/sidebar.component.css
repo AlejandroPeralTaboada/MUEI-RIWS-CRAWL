@@ -33,3 +33,7 @@ mat-toolbar {
 .isMobile mat-toolbar {
   display: inherit;
 }
+
+mat-sidenav {
+  background: radial-gradient(ellipse closest-side at 50% 30%, #184461, #15354D);
+}
