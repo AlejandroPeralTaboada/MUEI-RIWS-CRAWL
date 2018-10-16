@@ -14,7 +14,12 @@ import { DetailsComponent } from './views/details/details.component';
 import { SidebarComponent } from './views/sidebar/sidebar.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import {
+  MatSidenavModule,
+  MatListModule,
+  MatIconModule,
+  MatToolbarModule
+} from '@angular/material';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +34,12 @@ import { AppRoutingModule } from './app-routing.module';
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
-    AppRoutingModule
+    AppRoutingModule,
+    // Angular Material
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

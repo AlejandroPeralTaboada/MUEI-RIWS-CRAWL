@@ -5,11 +5,18 @@ import { HomeComponent } from './views/home/home.component';
 import { DetailsComponent } from './views/details/details.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { environment } from '../environments/environment';
+import { SidebarComponent } from './views/sidebar/sidebar.component';
 
 const appRoutes: Routes = [
-  { path: 'details', component: DetailsComponent },
-  { path: 'home', component: HomeComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {
+    path: '',
+    component: SidebarComponent,
+    children: [
+      { path: 'details', component: DetailsComponent },
+      { path: 'home', component: HomeComponent },
+      { path: '', redirectTo: '/home', pathMatch: 'full' }
+    ]
+  },
   { path: '**', component: PageNotFoundComponent }
 ];
 
