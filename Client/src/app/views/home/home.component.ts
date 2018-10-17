@@ -13,8 +13,18 @@ export class HomeComponent implements OnInit {
   constructor(private httpClient: HttpClient) {}
 
   ngOnInit() {
+    const body = {
+      from: 0,
+      size: 10,
+      query: {
+        wildcard: {
+          user: 'kim*'
+        }
+      }
+    };
+
     this.items = this.httpClient
-      .get('http://localhost:9200/test/_search')
+      .post('http://localhost:9200/test/_search', body)
       .pipe(map(i => i['hits']['hits'].map(e => e['_source'])));
   }
 }
