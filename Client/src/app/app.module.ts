@@ -20,6 +20,7 @@ import {
   MatIconModule,
   MatToolbarModule
 } from '@angular/material';
+import { HttpClientModule } from '../../node_modules/@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +36,7 @@ import {
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
     AppRoutingModule,
+    HttpClientModule,
     // Angular Material
     MatSidenavModule,
     MatListModule,

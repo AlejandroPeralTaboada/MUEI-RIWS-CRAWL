@@ -2,3 +2,6 @@
   home works!
 </p>
 <a routerLink="/details">details</a>
+<div *ngFor="let item of items | async">
+  <h1>{{item.user}}</h1>
+</div>
