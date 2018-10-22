@@ -1,0 +1,26 @@
+<div class="container">
+  <h2>Riws Steamgifts</h2>
+  <mat-divider></mat-divider>
+  <form [formGroup]="filters">
+    <mat-form-field>
+      <input matInput placeholder="Game Name" formControlName="name">
+    </mat-form-field>
+
+    <p>Precio</p>
+    <ng5-slider [(value)]="minValuePrice" [(highValue)]="maxValuePrice" [options]="optionsPrice"></ng5-slider>
+
+    <p>Nivel</p>
+    <ng5-slider [(value)]="minValueLevel" [(highValue)]="maxValueLevel" [options]="optionsLevel"></ng5-slider>
+
+    <p>Genres</p>
+    <div formArrayName="genres">
+      <mat-checkbox *ngFor="let genreControl of genresControl.controls; let i=index" [formControlName]="i"> {{genres[i]}}</mat-checkbox>
+    </div>
+
+    <mat-checkbox formControlName="hideOld"> Hide expired gifts</mat-checkbox>
+    <p>Form Status:</p>
+    <pre>
+      {{ filters.value|json }}
+    </pre>
+  </form>
+</div>

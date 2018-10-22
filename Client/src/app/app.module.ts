@@ -18,16 +18,27 @@ import {
   MatSidenavModule,
   MatListModule,
   MatIconModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatCardModule,
+  MatInputModule,
+  MatDividerModule,
+  MatCheckboxModule
 } from '@angular/material';
 import { HttpClientModule } from '../../node_modules/@angular/common/http';
+import { GameCardComponent } from './views/home/game-card/game-card.component';
+import { FiltersComponent } from './views/sidebar/filters/filters.component';
+import { Ng5SliderModule } from 'ng5-slider';
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     DetailsComponent,
     SidebarComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    GameCardComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,
@@ -37,13 +48,19 @@ import { HttpClientModule } from '../../node_modules/@angular/common/http';
     EffectsModule.forRoot([AppEffects]),
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     // Angular Material
     MatSidenavModule,
     MatListModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule,
+    Ng5SliderModule,
+    MatInputModule,
+    MatDividerModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
