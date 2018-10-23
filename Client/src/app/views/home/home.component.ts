@@ -2,17 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GiftCard } from '../../store/model/Gift';
-
+import { GiftCard, GiftToGiftCard } from '../../store/model/Gift';
+import * as fromStore from '../../store/reducers/index';
+import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  items: Observable<any[]>;
+  items: Observable<GiftCard[]>;
   games: GiftCard[];
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private store: Store<fromStore.State>) { }
 
   ngOnInit() {
     const body = {
@@ -25,16 +26,18 @@ export class HomeComponent implements OnInit {
       }
     };
 
-    this.items = this.httpClient
+    this.httpClient
       .post('http://localhost:9200/test/_search', body)
       .pipe(map(i => i['hits']['hits'].map(e => e['_source'])));
-  
-    const giftCard:GiftCard = {idGame:261570,name:"Ori",numberOfGifts:2}
-    const giftCard2:GiftCard = {idGame:377160,name:"Fallout 4",numberOfGifts:2}
-    
-    this.games = [giftCard,giftCard2];
-  
-    }
+
+    const giftCard: GiftCard = { idGame: 261570, name: "Ori", numberOfGifts: 2 }
+    const giftCard2: GiftCard = { idGame: 377160, name: "Fallout 4", numberOfGifts: 2 }
+
+    this.games = [giftCard, giftCard2];
+
+    this.items = this.store.select(fromStore.getResults).pipe(map(GiftToGiftCard))
+
+  }
 
 
 }
