@@ -22,7 +22,8 @@ import {
   MatCardModule,
   MatInputModule,
   MatDividerModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatButtonModule
 } from '@angular/material';
 import { HttpClientModule } from '../../node_modules/@angular/common/http';
 import { GameCardComponent } from './views/home/game-card/game-card.component';
@@ -58,7 +59,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     Ng5SliderModule,
     MatInputModule,
     MatDividerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

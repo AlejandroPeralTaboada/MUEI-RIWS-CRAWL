@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Options } from 'ng5-slider';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { State } from '../../../store/reducers';
 
 @Component({
   selector: 'app-filters',
@@ -8,33 +10,30 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
   styleUrls: ['./filters.component.css']
 })
 export class FiltersComponent implements OnInit {
-
-  genres = ["Accion", "FreeToPlay"]
+  genres = ['Accion', 'FreeToPlay'];
   filters = this.fb.group({
     name: [''],
     genres: this.fb.array(this.genres.map(i => false)),
     hideOld: true
-  })
-  minValueLevel: number = 0;
-  maxValueLevel: number = 10;
+  });
+  minValueLevel = 0;
+  maxValueLevel = 10;
   optionsLevel: Options = {
     floor: 0,
     ceil: 10,
     showTicks: true
   };
 
-  minValuePrice: number = 0;
-  maxValuePrice: number = 150;
+  minValuePrice = 0;
+  maxValuePrice = 150;
   optionsPrice: Options = {
     floor: 0,
     ceil: 150
   };
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private store: Store<State>) {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 
   get genresControl() {
     return this.filters.get('genres') as FormArray;
