@@ -1,0 +1,82 @@
+@import "../../../../variables.scss";
+
+.container {
+  min-width: 300px;
+  padding: 0px 15px;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.form {
+  margin: 10px 0px 0px 0px;
+}
+
+.smallControl {
+  margin: 10px 0px 5px 0px;
+}
+
+.control {
+  margin: 30px 0px 5px 0px;
+}
+
+
+.genres {
+  display: flex;
+  margin-left: 10px;
+  flex-direction: column;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+h3 {
+  margin: 0px;
+}
+
+.search {
+  right: 10px;
+}
+
+button {
+  height: 100%;
+}
+
+::ng-deep {
+  .custom-slider {
+    .ng5-slider {
+      .ng5-slider-selection {
+        background: $text-color;
+      }
+
+      .ng5-slider-pointer {
+        width: 8px;
+        height: 16px;
+        top: auto;
+        /* to remove the default positioning */
+        bottom: 0;
+        background-color: $text-color;
+        border-radius: 0px;
+      }
+
+      .ng5-slider-pointer:after {
+        display: none;
+      }
+
+      .ng5-slider-tick {
+        width: 1px;
+        height: 10px;
+        margin-left: 4px;
+        border-radius: 0;
+        background: #ffe4d1;
+        top: -3px;
+      }
+    }
+  }
+
+}
