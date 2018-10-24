@@ -12,7 +12,7 @@ const appRoutes: Routes = [
     path: '',
     component: SidebarComponent,
     children: [
-      { path: 'details', component: DetailsComponent },
+      { path: 'details/:id', component: DetailsComponent },
       { path: 'home', component: HomeComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]
@@ -29,4 +29,4 @@ const appRoutes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
