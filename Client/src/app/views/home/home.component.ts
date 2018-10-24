@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       numberOfGifts: 2
     };
 
-    this.games = [giftCard, giftCard2];
+    this.games = Array(40).fill(giftCard2);
 
     this.items = this.store
       .select(fromStore.getResults)

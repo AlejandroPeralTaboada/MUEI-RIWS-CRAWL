@@ -1,11 +1,20 @@
-:host {
+.container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   min-height: 100%;
+}
+
+.container[min-width~="600px"] {
+  grid-template-columns: 1fr 1fr;
+}
+
+.container[min-width~="600px"] .left-half {
+  display: inherit;
 }
 
 .left-half {
   height: 100%;
+  display: none;
 }
 
 .right-half {
