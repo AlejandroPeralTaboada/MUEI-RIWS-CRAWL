@@ -1,15 +1,17 @@
 .container {
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr;
   min-height: 100%;
+  align-items: flex-start;
 }
 
-.container[min-width~="600px"] {
-  grid-template-columns: 1fr 1fr;
+.container[min-width~="600px"] .right-half {
+  flex: 50%;
 }
 
 .container[min-width~="600px"] .left-half {
   display: inherit;
+  flex: 50%;
 }
 
 .left-half {
@@ -17,8 +19,15 @@
   display: none;
 }
 
+app-home {
+  width: 100%;
+}
+
 .right-half {
-  height: 100%;
+  position: sticky;
+  top: 0px;
+  min-height: calc(100vh - 64px);
   background-color: #1b2837;
+  width: 100%;
   background-repeat: no-repeat;
 }

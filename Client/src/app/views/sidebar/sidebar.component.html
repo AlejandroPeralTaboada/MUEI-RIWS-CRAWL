@@ -3,7 +3,7 @@
     <button mat-icon-button (click)="toggleSidebar()">
       <mat-icon>menu</mat-icon>
     </button>
-    <h1 class="example-app-name">Steamgifts</h1>
+    <h1 [routerLink]="'/home'" class="example-app-name" style="cursor: pointer;">Steamgifts</h1>
   </mat-toolbar>
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
