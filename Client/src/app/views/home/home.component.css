@@ -20,3 +20,15 @@
 .game-card-container[min-width~="900px"] {
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+
+.game-card-container[min-width~="1200px"] {
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.game-card-container[min-width~="1500px"] {
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.game-card-container[min-width~="1800px"] {
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
