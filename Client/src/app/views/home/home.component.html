@@ -1,7 +1,3 @@
-<p>
-  home works!
-</p>
-<a routerLink="/details">details</a>
-<div *ngFor="let item of items | async">
-  <h1>{{item.user}}</h1>
+<div class="game-card-container">
+  <app-game-card *ngFor="let game of games" [game]=game></app-game-card>
 </div>

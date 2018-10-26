@@ -12,7 +12,7 @@ const appRoutes: Routes = [
     path: '',
     component: SidebarComponent,
     children: [
-      { path: 'details', component: DetailsComponent },
+      { path: 'details/:id', component: DetailsComponent },
       { path: 'home', component: HomeComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]
@@ -24,7 +24,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: !environment.production } // <-- debugging purposes only
+      { enableTracing: false } //!environment.production } // <-- debugging purposes only
     )
   ],
   exports: [RouterModule]

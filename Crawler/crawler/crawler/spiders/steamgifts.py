@@ -43,8 +43,8 @@ class SteamgiftsSpider(CrawlSpider):
             "//div[@class='featured__heading']/a[1]/@href").extract_first()).split("/")[0])
         item['remainingTime'] = customInt(response.xpath(
             "//div[@class='featured__column']/span/@data-timestamp").extract_first())
+        item['expiresWhen'] = item['remainingTime']+ item['_created']
         item['url'] = response.request.url
-
         url = "https://store.steampowered.com/api/appdetails?appids=" + \
             str(item['idGame'])
         self.count += 1
