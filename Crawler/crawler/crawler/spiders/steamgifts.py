@@ -41,6 +41,7 @@ class SteamgiftsSpider(CrawlSpider):
             "//div[@class='featured__heading']/a[1]/@href").extract_first().replace(baseSteamUrl, "").split("/")[0])
         item['remainingTime'] = customInt(response.xpath(
             "//div[@class='featured__column']/span/@data-timestamp").extract_first())
+        item['expiresWhen'] = item['remainingTime']+ item['_created']
         # genres = scrapy.Field()
         # https://store.steampowered.com/api/appdetails?appids=646470
         self.count += 1
