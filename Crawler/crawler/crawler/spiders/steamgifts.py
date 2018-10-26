@@ -48,7 +48,7 @@ class SteamgiftsSpider(CrawlSpider):
         url = "https://store.steampowered.com/api/appdetails?appids=" + \
             str(item['idGame'])
         self.count += 1
-        if (self.count > 2):
+        if (self.count > 20):
             raise CloseSpider('item_exceeded')
         yield Request(url, meta={'item': item}, callback=self.parseSteamApi, dont_filter=True)
 
