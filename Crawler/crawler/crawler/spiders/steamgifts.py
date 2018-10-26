@@ -2,9 +2,11 @@
 import scrapy
 import time
 from crawler.items import CrawlerItem
-from scrapy.spiders import CrawlSpider, Rule
+from scrapy.spiders import CrawlSpider, Rule, Request
 from scrapy.linkextractors import LinkExtractor
 from scrapy.exceptions import CloseSpider
+import re
+import json
 
 
 def customInt(string):
@@ -36,18 +38,19 @@ class SteamgiftsSpider(CrawlSpider):
         item['entryNumber'] = customInt(response.xpath(
             "//div[@class='sidebar__navigation__item__count live__entry-count']/text()").extract_first())
         item['_created'] = time.time()
-        baseSteamUrl = "https://store.steampowered.com/app/"
-        item['idGame'] = customInt(response.xpath(
-            "//div[@class='featured__heading']/a[1]/@href").extract_first().replace(baseSteamUrl, "").split("/")[0])
+        baseSteamUrl = "https:\/\/store\.steampowered\.com\/\w*\/"
+        item['idGame'] = customInt(re.sub(baseSteamUrl, "", response.xpath(
+            "//div[@class='featured__heading']/a[1]/@href").extract_first()).split("/")[0])
         item['remainingTime'] = customInt(response.xpath(
             "//div[@class='featured__column']/span/@data-timestamp").extract_first())
         item['expiresWhen'] = item['remainingTime']+ item['_created']
-        # genres = scrapy.Field()
-        # https://store.steampowered.com/api/appdetails?appids=646470
+        item['url'] = response.request.url
+        url = "https://store.steampowered.com/api/appdetails?appids=" + \
+            str(item['idGame'])
         self.count += 1
-        if (self.count > 20):
+        if (self.count > 2):
             raise CloseSpider('item_exceeded')
-        yield item
+        yield Request(url, meta={'item': item}, callback=self.parseSteamApi, dont_filter=True)
 
     def getPoints(self, response):
         pointsString = response.xpath(
@@ -69,3 +72,12 @@ class SteamgiftsSpider(CrawlSpider):
             return customInt(level.replace("Level ", "").replace("+", ""))
         else:
             return 0
+
+    def parseSteamApi(self, response):
+        item = response.request.meta['item']
+        jsonresponse = json.loads(response.body_as_unicode())
+        data = jsonresponse[str(item['idGame'])]['data']
+        item['name'] = data['name']
+        genres = data['genres']
+        item['genres'] = list(map(lambda x: x['description'], genres))
+        yield item

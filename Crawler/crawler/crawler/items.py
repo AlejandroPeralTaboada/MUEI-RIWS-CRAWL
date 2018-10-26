@@ -20,4 +20,5 @@ class CrawlerItem(scrapy.Item):
     level = scrapy.Field()
     genres = scrapy.Field()
     expiresWhen = scrapy.Field()
+    url = scrapy.Field()
     _created = scrapy.Field()
