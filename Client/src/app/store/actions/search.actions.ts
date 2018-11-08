@@ -7,14 +7,14 @@ export enum SearchActionTypes {
   SetSearchResults = '[SetSearchResults] Set Search Results'
 }
 
-export class Searchs implements Action {
+export class Search implements Action {
   readonly type = SearchActionTypes.Search;
-  constructor(public payload: Filters) { }
+  constructor(public payload: Filters) {}
 }
 
 export class SetSearchResults implements Action {
   readonly type = SearchActionTypes.SetSearchResults;
-  constructor(public payload: Gift[]) { }
+  constructor(public payload: Gift[]) {}
 }
 
-export type SearchActions = Searchs | SetSearchResults;
+export type SearchActions = Search | SetSearchResults;

@@ -1,6 +1,6 @@
 export interface Filters {
   name: string;
-  price: Range;
+  points: Range;
   level: Range;
   genres: string[];
   hideExpired: boolean;
