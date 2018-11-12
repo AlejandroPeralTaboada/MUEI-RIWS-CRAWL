@@ -21,7 +21,7 @@
       <h3>Genres</h3>
       <div formArrayName="genres" class="genres smallControl">
         <mat-checkbox *ngFor="let genreControl of genresControl.controls; let i=index" [formControlName]="i">
-          {{genres[i]}}</mat-checkbox>
+          {{(genres|async)[i]}}</mat-checkbox>
       </div>
     </div>
 

@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Options } from 'ng5-slider';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { State } from '../../../store/reducers';
+import { State, getGenres, getMinLevel, getMaxLevel, getMinPoints, getMaxPoint } from '../../../store/reducers';
 import { Search } from 'src/app/store/actions/search.actions';
 import { Filters, Range } from 'src/app/store/model/Filters';
+import { Observable, Subscription } from '../../../../../node_modules/rxjs';
 
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss']
 })
-export class FiltersComponent implements OnInit {
-  genres = ['Accion', 'FreeToPlay'];
+export class FiltersComponent implements OnInit, OnDestroy {
+  genres: Observable<String[]>;
   filters = this.fb.group({
     name: [''],
-    genres: this.fb.array(this.genres.map(i => false)),
+    genres: this.fb.array([]),
     hideOld: true
   });
   minValueLevel = 0;
@@ -33,9 +34,42 @@ export class FiltersComponent implements OnInit {
     ceil: 150
   };
 
+  subscription: Subscription[] = [];
   constructor(private fb: FormBuilder, private store: Store<State>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.genres = this.store.select(getGenres);
+    this.subscription.push(
+      this.genres.subscribe(g => {
+        console.log(g);
+        this.filters.controls['genres'] = this.fb.array(g.map(i => false));
+      })
+    );
+    this.subscription.push(
+      this.store.select(getMinLevel).subscribe(level => {
+        this.optionsLevel.floor = level;
+      })
+    );
+    this.subscription.push(
+      this.store.select(getMaxLevel).subscribe(level => {
+        this.optionsLevel.ceil = level;
+      })
+    );
+    this.subscription.push(
+      this.store.select(getMinPoints).subscribe(level => {
+        this.optionsPrice.floor = level;
+      })
+    );
+    this.subscription.push(
+      this.store.select(getMaxPoint).subscribe(level => {
+        this.optionsPrice.ceil = level;
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.forEach(i => i.unsubscribe());
+  }
 
   get genresControl() {
     return this.filters.get('genres') as FormArray;
