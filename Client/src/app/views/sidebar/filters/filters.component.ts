@@ -75,6 +75,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
       })
     );
     this.store.dispatch(new LoadFilters());
+    this.store.dispatch(new Search(undefined));
   }
 
   ngOnDestroy() {

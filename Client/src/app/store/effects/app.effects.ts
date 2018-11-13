@@ -15,14 +15,11 @@ export class AppEffects {
 
   @Effect()
   search$: Observable<any> = this.actions$.pipe(
-    ofType(SearchActions.SearchActionTypes.Search),
-    switchMap(() => {
-      return of(new SearchActions.SetSearchResults([]));
-      /*return this.httpClient.get<Gift[]>('login').pipe(
-        map(userName => {
-          return new SearchActions.SetSearchResults(userName);
-        })
-      );*/
+    ofType<SearchActions.Search>(SearchActions.SearchActionTypes.Search),
+    switchMap(action => {
+      return this.httpClient
+        .post(environment.url, this.getSearchRequestBody(action.payload))
+        .pipe(map(results => new SearchActions.SetSearchResults(this.getSearchResults(results))));
     })
   );
 
@@ -51,6 +48,71 @@ export class AppEffects {
     })
   );
 
+  getSearchRequestBody = (data: Filters) => {
+    if (!data) {
+      return {};
+    }
+    let mustRequest = [
+      {
+        wildcard: {
+          name: '*name*'
+        }
+      },
+      {
+        terms: {
+          genres: ['Casual', 'Action']
+        }
+      }
+    ];
+    mustRequest = [];
+    const filterRequest = [this.getRange('level', data.level), this.getRange('requiredPoints', data.points)];
+    if (data.hideExpired) {
+      filterRequest.push({
+        range: {
+          expiresWhen: {
+            gte: new Date().getTime()
+          }
+        }
+      });
+    }
+    return {
+      query: {
+        bool: {
+          must: mustRequest,
+          filter: filterRequest
+        }
+      }
+    };
+  };
+
+  getRange(name: string, range: Range) {
+    const result = { range: {} };
+    result[name] = {
+      gte: range.min,
+      lte: range.max
+    };
+    return result;
+  }
+
+  getSearchResults = (results): Gift[] => {
+    return results.hits.hits.map(item => this.getItemMapping(item._source));
+  };
+
+  getItemMapping = (source): Gift => {
+    return {
+      idGame: source.idGame,
+      idGift: source.idGift,
+      name: source.name,
+      requiredPoints: source.requiredPoints,
+      numberOfCopies: source.numberOfCopies,
+      level: source.level,
+      entryNumber: source.entryNumber,
+      _created: source._created,
+      remainingTime: source.remainingTime,
+      url: source.url,
+      genres: source.genres
+    };
+  };
   createRangeRequest = (filedName: String) => {
     return this.httpClient.post(environment.url, this.createRangeBody(filedName));
   };
@@ -69,7 +131,6 @@ export class AppEffects {
   };
 
   getRangeResults = (data): Range => {
-    console.log(data);
     return { min: parseInt(data.aggregations.min.value, 10), max: parseInt(data.aggregations.max.value, 10) };
   };
 

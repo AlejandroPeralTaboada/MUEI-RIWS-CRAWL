@@ -7,13 +7,11 @@ import { GiftCard } from '../../../store/model/Gift';
   styleUrls: ['./game-card.component.scss']
 })
 export class GameCardComponent implements OnInit {
-
-  @Input() game: GiftCard
-  photo: string
-  constructor() { }
+  @Input() game: GiftCard;
+  photo: string;
+  constructor() {}
 
   ngOnInit() {
-    this.photo = `https://steamcdn-a.akamaihd.net/steam/apps/${this.game.idGame}/header_292x136.jpg`
+    this.photo = `https://steamcdn-a.akamaihd.net/steam/apps/${this.game.idGame}/header_292x136.jpg`;
   }
-
 }
