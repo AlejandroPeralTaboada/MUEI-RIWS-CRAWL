@@ -7,6 +7,7 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.exceptions import CloseSpider
 import re
 import json
+import os
 
 
 def customInt(string):
@@ -24,6 +25,15 @@ class SteamgiftsSpider(CrawlSpider):
         Rule(LinkExtractor(allow=(), restrict_xpaths=(
             "//a[@class='giveaway__heading__name']")), callback='parse_item', follow=False)
     }
+
+    def __init__(self, *args, **kwargs):
+        super(SteamgiftsSpider, self).__init__(*args, **kwargs)
+        maxItems = os.environ.get('MAX_NUMBER_TO_CRAWL')
+        if (maxItems==None):
+            maxItems=20
+        else:
+            maxItems = int(maxItems)
+        self.maxItems = maxItems    
 
     def parse_item(self, response):
         item = CrawlerItem()
@@ -47,7 +57,7 @@ class SteamgiftsSpider(CrawlSpider):
         url = "https://store.steampowered.com/api/appdetails?appids=" + \
             str(item['idGame'])
         self.count += 1
-        if (self.count > 20):
+        if (self.count > self.maxItems):
             raise CloseSpider('item_exceeded')
         yield Request(url, meta={'item': item}, callback=self.parseSteamApi, dont_filter=True)
 
