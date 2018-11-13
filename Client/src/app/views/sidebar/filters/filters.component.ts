@@ -6,6 +6,7 @@ import { State, getGenres, getMinLevel, getMaxLevel, getMinPoints, getMaxPoint }
 import { Search } from 'src/app/store/actions/search.actions';
 import { Filters, Range } from 'src/app/store/model/Filters';
 import { Observable, Subscription } from '../../../../../node_modules/rxjs';
+import { LoadFilters } from '../../../store/actions/filter.actions';
 
 @Component({
   selector: 'app-filters',
@@ -47,24 +48,33 @@ export class FiltersComponent implements OnInit, OnDestroy {
     );
     this.subscription.push(
       this.store.select(getMinLevel).subscribe(level => {
-        this.optionsLevel.floor = level;
+        console.log(level);
+        this.optionsLevel = { ...this.optionsLevel, floor: level };
+        this.minValueLevel = Math.max(level, this.minValueLevel);
       })
     );
     this.subscription.push(
       this.store.select(getMaxLevel).subscribe(level => {
-        this.optionsLevel.ceil = level;
+        console.log(level);
+        this.optionsLevel = { ...this.optionsLevel, ceil: level };
+        this.maxValueLevel = Math.min(level, this.maxValueLevel);
       })
     );
     this.subscription.push(
       this.store.select(getMinPoints).subscribe(level => {
-        this.optionsPrice.floor = level;
+        console.log(level);
+        this.optionsPrice = { ...this.optionsPrice, floor: level };
+        this.minValuePrice = Math.max(level, this.minValuePrice);
       })
     );
     this.subscription.push(
       this.store.select(getMaxPoint).subscribe(level => {
-        this.optionsPrice.ceil = level;
+        console.log(level);
+        this.optionsPrice = { ...this.optionsPrice, ceil: level };
+        this.maxValuePrice = Math.min(level, this.maxValuePrice);
       })
     );
+    this.store.dispatch(new LoadFilters());
   }
 
   ngOnDestroy() {

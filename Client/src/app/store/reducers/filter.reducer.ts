@@ -12,25 +12,28 @@ export interface State {
 export const initialState: State = {
   minPoints: 0,
   maxPoints: 150,
-  minLevel: 1,
+  minLevel: 0,
   maxLevel: 10,
-  genres: ['Accion']
+  genres: []
 };
 
 export function reducer(state = initialState, action: fromFilter.FilterActions): State {
   switch (action.type) {
-    case fromFilter.FilterActionTypes.SetLevel:
-      return handleSetSearchResults(state, action);
-    case fromFilter.FilterActionTypes.SetPoints:
+    case fromFilter.FilterActionTypes.SetFilters:
       return handleSetSearchResults(state, action);
     default:
       return state;
   }
 }
 
-function handleSetSearchResults(state: State, action: fromFilter.SetLevel | fromFilter.SetPoints): State {
+function handleSetSearchResults(state: State, action: fromFilter.SetFilters): State {
   return {
-    ...state
+    ...state,
+    minLevel: action.payload.level.min,
+    maxLevel: action.payload.level.max,
+    minPoints: action.payload.points.min,
+    maxPoints: action.payload.points.max,
+    genres: action.payload.genres
   };
 }
 

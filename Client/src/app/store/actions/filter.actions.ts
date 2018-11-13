@@ -3,22 +3,22 @@ import { Filters } from '../model/Filters';
 import { Gift } from '../model/Gift';
 
 export enum FilterActionTypes {
-  SetPoints = '[SetPoints]',
-  SetLevel = '[SetLevel]'
+  SetFilters = '[SetFilters]',
+  LoadFilters = '[LoadFilters]'
 }
 
 export interface Range {
   min: number;
   max: number;
 }
-export class SetPoints implements Action {
-  readonly type = FilterActionTypes.SetPoints;
-  constructor(public payload: Range) {}
+export class SetFilters implements Action {
+  readonly type = FilterActionTypes.SetFilters;
+  constructor(public payload: Filters) {}
 }
 
-export class SetLevel implements Action {
-  readonly type = FilterActionTypes.SetLevel;
-  constructor(public payload: Range) {}
+export class LoadFilters implements Action {
+  readonly type = FilterActionTypes.LoadFilters;
+  constructor() {}
 }
 
-export type FilterActions = SetPoints | SetLevel;
+export type FilterActions = SetFilters | LoadFilters;

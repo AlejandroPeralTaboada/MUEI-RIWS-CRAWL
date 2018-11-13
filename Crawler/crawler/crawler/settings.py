@@ -23,6 +23,24 @@ ELASTICSEARCH_INDEX = 'steamgifts'
 ELASTICSEARCH_TYPE = 'items'
 ELASTICSEARCH_UNIQ_KEY = 'idGift'  # Custom unique key
 
+ELASTICSEARCH_INDEX_MAPPING = {    
+   "mappings": {
+      "steamgifts": {
+         "properties": {
+            "genres": {
+               "type": "string",
+               "fields": {
+                  "raw": {
+                     "type": "string",
+                     "index": "not_analyzed"
+                  }
+               }
+            }
+         }
+      }   
+    }
+}
+
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'crawler (+http://www.yourdomain.com)'
