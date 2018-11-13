@@ -38,9 +38,6 @@ export class AppEffects {
           const points = this.getRangeResults(results[0]);
           const level = this.getRangeResults(results[1]);
           const genres: string[] = this.getGenresResults(results[2]);
-          console.log(points);
-          console.log(level);
-          console.log(genres);
           const newFilters: Filters = {
             name: '',
             points: points,
