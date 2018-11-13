@@ -67,8 +67,11 @@ export class AppEffects {
     }
     if (data.name.trim() !== '') {
       mustRequest.push({
-        wildcard: {
-          name: `*${data.name}*`
+        multi_match: {
+          query: data.name,
+          type: 'best_fields',
+          fields: ['name'],
+          tie_breaker: 0.3
         }
       });
     }
