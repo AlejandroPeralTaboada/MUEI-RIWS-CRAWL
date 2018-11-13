@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-  OnDestroy,
-  ViewChild
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
 import { MediaMatcher } from '../../../../node_modules/@angular/cdk/layout';
 import { MatSidenav } from '../../../../node_modules/@angular/material';
 
@@ -43,7 +37,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   private setSidebarOpen(param: boolean) {
     this.sidebarOpen = param;
-    console.log(this.sidebarOpen);
     if (this.sidebarOpen) {
       this.sidebar.open();
     } else {

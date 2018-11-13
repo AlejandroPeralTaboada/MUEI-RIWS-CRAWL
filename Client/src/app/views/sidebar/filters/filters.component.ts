@@ -7,6 +7,7 @@ import { Search } from 'src/app/store/actions/search.actions';
 import { Filters, Range } from 'src/app/store/model/Filters';
 import { Observable, Subscription } from '../../../../../node_modules/rxjs';
 import { LoadFilters } from '../../../store/actions/filter.actions';
+import { take } from '../../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-filters',
@@ -42,34 +43,33 @@ export class FiltersComponent implements OnInit, OnDestroy {
     this.genres = this.store.select(getGenres);
     this.subscription.push(
       this.genres.subscribe(g => {
-        console.log(g);
-        this.filters.controls['genres'] = this.fb.array(g.map(i => false));
+        this.filters = this.fb.group({
+          name: [this.filters.value.name],
+          genres: this.fb.array(g.map(i => false)),
+          hideOld: this.filters.value.hideOld
+        });
       })
     );
     this.subscription.push(
       this.store.select(getMinLevel).subscribe(level => {
-        console.log(level);
         this.optionsLevel = { ...this.optionsLevel, floor: level };
         this.minValueLevel = Math.max(level, this.minValueLevel);
       })
     );
     this.subscription.push(
       this.store.select(getMaxLevel).subscribe(level => {
-        console.log(level);
         this.optionsLevel = { ...this.optionsLevel, ceil: level };
         this.maxValueLevel = Math.min(level, this.maxValueLevel);
       })
     );
     this.subscription.push(
       this.store.select(getMinPoints).subscribe(level => {
-        console.log(level);
         this.optionsPrice = { ...this.optionsPrice, floor: level };
         this.minValuePrice = Math.max(level, this.minValuePrice);
       })
     );
     this.subscription.push(
       this.store.select(getMaxPoint).subscribe(level => {
-        console.log(level);
         this.optionsPrice = { ...this.optionsPrice, ceil: level };
         this.maxValuePrice = Math.min(level, this.maxValuePrice);
       })
@@ -86,17 +86,18 @@ export class FiltersComponent implements OnInit, OnDestroy {
     return this.filters.get('genres') as FormArray;
   }
 
-  summit() {
+  async summit() {
     const value = this.filters.value;
+    const genresValue = await this.genres.pipe(take(1)).toPromise();
     const genres = value.genres
       .map((item, index) => {
         if (item) {
-          return this.genres[index];
+          return genresValue[index];
         } else {
-          return null;
+          return 0;
         }
       })
-      .filter(i => i != null);
+      .filter(i => i !== 0);
     const points: Range = { min: this.minValuePrice, max: this.maxValuePrice };
     const level: Range = { min: this.minValueLevel, max: this.maxValueLevel };
     const data: Filters = {

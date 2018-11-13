@@ -4,7 +4,7 @@ import { Gift } from '../model/Gift';
 import { Observable, of, forkJoin } from 'rxjs';
 import * as SearchActions from '../actions/search.actions';
 import * as FilterActions from '../actions/filter.actions';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Range, Filters } from '../model/Filters';
@@ -17,9 +17,13 @@ export class AppEffects {
   search$: Observable<any> = this.actions$.pipe(
     ofType<SearchActions.Search>(SearchActions.SearchActionTypes.Search),
     switchMap(action => {
-      return this.httpClient
-        .post(environment.url, this.getSearchRequestBody(action.payload))
-        .pipe(map(results => new SearchActions.SetSearchResults(this.getSearchResults(results))));
+      return this.httpClient.post(environment.url, this.getSearchRequestBody(action.payload)).pipe(
+        map(results => new SearchActions.SetSearchResults(this.getSearchResults(results))),
+        catchError(error => {
+          console.log(error);
+          return of(new SearchActions.SetSearchResults([]));
+        })
+      );
     })
   );
 
@@ -49,22 +53,25 @@ export class AppEffects {
   );
 
   getSearchRequestBody = (data: Filters) => {
+    const def = { from: 0, size: 100 };
     if (!data) {
-      return {};
+      return def;
     }
-    let mustRequest = [
-      {
-        wildcard: {
-          name: '*name*'
-        }
-      },
-      {
+    const mustRequest = [];
+    if (data.genres.length !== 0) {
+      mustRequest.push({
         terms: {
-          genres: ['Casual', 'Action']
+          genres: data.genres
         }
-      }
-    ];
-    mustRequest = [];
+      });
+    }
+    if (data.name.trim() !== '') {
+      mustRequest.push({
+        wildcard: {
+          name: `*${data.name}*`
+        }
+      });
+    }
     const filterRequest = [this.getRange('level', data.level), this.getRange('requiredPoints', data.points)];
     if (data.hideExpired) {
       filterRequest.push({
@@ -76,6 +83,7 @@ export class AppEffects {
       });
     }
     return {
+      ...def,
       query: {
         bool: {
           must: mustRequest,
@@ -87,7 +95,7 @@ export class AppEffects {
 
   getRange(name: string, range: Range) {
     const result = { range: {} };
-    result[name] = {
+    result.range[name] = {
       gte: range.min,
       lte: range.max
     };
