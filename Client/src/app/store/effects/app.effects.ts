@@ -150,7 +150,7 @@ export class AppEffects {
       size: 0,
       aggs: {
         genres: {
-          terms: { field: 'genres.raw' }
+          terms: { field: 'genres.raw', size: 100 }
         }
       }
     };
