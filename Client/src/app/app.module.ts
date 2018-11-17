@@ -30,6 +30,7 @@ import { GameCardComponent } from './views/home/game-card/game-card.component';
 import { FiltersComponent } from './views/sidebar/filters/filters.component';
 import { Ng5SliderModule } from 'ng5-slider';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GiftDetailComponent } from './views/details/gift-detail/gift-detail.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SidebarComponent,
     PageNotFoundComponent,
     GameCardComponent,
-    FiltersComponent
+    FiltersComponent,
+    GiftDetailComponent
   ],
   imports: [
     BrowserModule,

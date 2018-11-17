@@ -1,0 +1,30 @@
+a, a:hover, a:visited, a:focus, a:active {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.giftcontainer {
+    background-color: rgba(173, 216, 230, 0.26);
+    margin-right: 15px;
+    padding-bottom: 5px;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.giftcontainer:hover {
+    box-shadow: -1px 10px 29px 0px rgba(143, 143, 143, 0.747);
+    transform: translateY(-3px)
+}
+
+.giftcontainer a:hover {
+    color: blanchedalmond;
+}
+
+.giftcontainer h3 {
+    background-color: rgba(100, 183, 211, 0.856);
+    color: rgb(49, 49, 49);
+    padding: 5px;
+}
+
+.giftcontainer p {
+    margin-left: 10px;
+}

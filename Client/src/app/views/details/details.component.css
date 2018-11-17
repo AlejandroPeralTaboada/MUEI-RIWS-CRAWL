@@ -3,6 +3,7 @@
   grid-template-columns: 1fr;
   min-height: 100%;
   align-items: flex-start;
+  overflow: auto;
 }
 
 .container[min-width~="600px"] .right-half {
@@ -30,4 +31,10 @@ app-home {
   background-color: #1b2837;
   width: 100%;
   background-repeat: no-repeat;
+}
+
+.right-half p {
+  background-color: blueviolet;
+  padding: 10px;
+  font-size: 20px;
 }
