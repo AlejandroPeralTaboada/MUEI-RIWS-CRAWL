@@ -6,7 +6,7 @@
     <p class="detailsheader">
       Available gifts
     </p>
-    <ul>
+    <ul class="gifts">
       <app-gift-detail *ngFor="let gift of giftList$ | async" [gift]=gift></app-gift-detail>
     </ul>
   </div>

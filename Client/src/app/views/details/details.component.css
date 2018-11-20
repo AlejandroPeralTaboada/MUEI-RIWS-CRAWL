@@ -3,7 +3,6 @@
   grid-template-columns: 1fr;
   min-height: 100%;
   align-items: flex-start;
-  overflow: auto;
 }
 
 .container[min-width~="600px"] .right-half {
@@ -37,4 +36,21 @@ app-home {
   background-color: blueviolet;
   padding: 10px;
   font-size: 20px;
+}
+
+.gifts {
+  overflow-y: auto;
+  max-height: calc(100vh - 170px);
+}
+
+.gifts::-webkit-scrollbar {
+  width: 0px;
+  /* remove scrollbar space */
+  background: transparent;
+  /* optional: just make scrollbar invisible */
+}
+
+/* optional: show position indicator in red */
+.gifts::-webkit-scrollbar-thumb {
+  background: #FF0000;
 }
